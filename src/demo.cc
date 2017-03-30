@@ -3,7 +3,9 @@
 #include "demo.h"
 #include <vector>
 
+#ifndef WIN32
 #include <sys/time.h>
+#endif
 #include "darknet/network.h"
 #include "darknet/detection_layer.h"
 #include "darknet/region_layer.h"
@@ -69,14 +71,16 @@ void capture_detections(int num, float thresh, box *boxes, float **probs, char *
         float prob = probs[i][cl];
         if (prob > thresh) {
             box b = boxes[i];
-            current_results.push_back({
-                .x = b.x,
-                .y = b.y,
-                .w = b.w,
-                .h = b.h,
-                .prob = prob,
-                .name = names[cl]
-            });
+
+			RecognitionResult recResult;
+			recResult.x = b.x;
+			recResult.y = b.y;
+			recResult.w = b.w;
+			recResult.h = b.h;
+			recResult.prob = prob;
+			recResult.name = names[cl];
+
+			current_results.push_back(recResult);
         }
     }
 }

@@ -1,5 +1,10 @@
 #include <nan.h>
+
+#ifndef WIN32
 #include <unistd.h>
+#else
+#include "darknet/unistd.h"
+#endif
 
 #include "src/demo.h"
 #include "src/types.h"

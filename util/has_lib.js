@@ -92,6 +92,11 @@ function hasCuda () {
 }
 
 function main (query) {
+  // TODO: do for windows, for now just bailout
+  if (process.platform == 'win32') {
+    return false;
+  }
+
   switch (query) {
     case 'opencv':
       return hasSystemLib(query)
